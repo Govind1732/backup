@@ -2,285 +2,268 @@ import React, { useState } from "react";
 import {
   Container,
   Navbar,
+  NavbarText,
+  Image,
   Nav,
   NavDropdown,
-  DropdownButton,
-  ButtonGroup,
   Dropdown,
+  DropdownButton,
+  Stack,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "../css/Header.css";
 
 const Header = () => {
-  const [autoProfileOpen, setAutoProfileOpen] = useState(false);
-  const [ruleProfileOpen, setRuleProfileOpen] = useState(false);
-  const [mlProfileOpen, setmlProfileOpen] = useState(false);
-  // const [mlProfileOpen, setmlProfileOpen] = useState(false);
-  const [selectedLink, setSelectedLink] = useState(null);
-  const handleSelect = (link) => {
-    setSelectedLink(link);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // const handleOptionSelect = (option) => {
+  //   setSelectedOption(option);
+  // };
+  const handleDropdownToggle = (isOpen) => {
+    setDropdownOpen(isOpen);
   };
 
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setDropdownOpen(false);
+  };
+
+  const style = {
+    padding: "0",
+    margin: "0",
+    boxSizing: "border-box",
+  };
   return (
     <>
-      <style>
-        {`
-      .dropdown-toggle::after {
-        display: none;
-      }
-    `}
-      </style>
-      <header>
-        <Navbar
-          bg="black"
-          variant="dark"
-          expand="lg"
-          className="d-flex flex-column">
-          <Container>
-            <Navbar.Brand as={Link} to="/">
-              <img
-                src="verizon-red-icon-black.png"
+      <Navbar className="bg-black">
+        <Container>
+          <Navbar.Brand>
+            <Link to="/">
+              <Image
+                src="./verizon-red-icon-black.png"
                 className="rounded float-start"
                 alt="verizon-icon"
                 width="60"
                 height="60"
               />
-              <img
+              <Image
                 src="DQaaSlogo.png"
-                className="rounded float-start"
                 alt="DQaas_logo"
                 width="100"
                 height="60"
+                className="rounded float-start"
               />
-            </Navbar.Brand>
+            </Link>
+          </Navbar.Brand>
+          <NavbarText>
+            <h5 className="text-white fw-bolder">Data Quality As a Service</h5>
+          </NavbarText>
+          <Image
+            src="beta3.png"
+            alt="beta3"
+            width="40"
+            height="60"
+            className="rounded float-end"
+          />
+        </Container>
+      </Navbar>
+      <Navbar className="bg-black" variant="dark" style={style}>
+        <Container>
+          <Navbar.Toggle aria-controls="nav" />
+          <Navbar.Collapse id="nav" style={style}>
+            <Nav
+              className="me-auto"
+              onSelect={(selectedKey) => setSelectedOption(selectedKey)}
+              style={style}>
+              {/* <Stack direction="horizontal" gap={3} style={style}> */}
 
-            <Navbar.Collapse className="justify-content-center">
-              <Navbar.Text className="text-white">
-                <h5>Data Quality As a Service</h5>
-              </Navbar.Text>
-            </Navbar.Collapse>
-
-            <img
-              src="beta3.png"
-              className="rounded float-end"
-              alt="beta3"
-              width="40"
-              height="60"
-            />
-          </Container>
-          <Container>
-            <Nav className="me-auto" defaultActiveKey="/">
-
-              <Nav.Item>
+              {/* Home */}
               <Nav.Link
-                as={Link}
                 to="/"
-                className="nav-link"
-                
-                onClick={() => {
-                  handleSelect("/");
-                }}>
-                <span className="p-2" style={{
-                  color: selectedLink === "/" ? "black" : "white",
+                as={Link}
+                eventKey="/"
+                style={{
                   backgroundColor:
-                    selectedLink === "/" ? "white" : "black",
-                }}>Home</span>
+                    selectedOption === "/" ? "white" : "transparent",
+                  color: selectedOption === "/" ? "black" : "white",
+                }}>
+                Home
               </Nav.Link>
-              </Nav.Item>
-              
-              <Nav.Item>
+
+              {/* Auto Profile */}
               <NavDropdown
                 title="Auto Profile"
-                id="auto-profile-dropdown"
-                show={autoProfileOpen}
-                onMouseEnter={() => setAutoProfileOpen(true)}
-                onMouseLeave={() => setAutoProfileOpen(false)}
-                >
+                menuVariant="dark"
+                show={dropdownOpen}
+                onSelect={(selectedKey) => setSelectedOption(selectedKey)}
+                onMouseEnter={() => setDropdownOpen(true)}
+                onMouseLeave={() => setDropdownOpen(false)}
+                style={{
+                  backgroundColor:
+                    selectedOption === "/autoProfile" ? "white" : "transparent",
+                  color: selectedOption === "/autoProfile" ? "black" : "white",
+                }}>
                 <NavDropdown.Item
                   as={Link}
                   to="/autoProfile"
-                  
-                  onClick={() => {
-                    handleSelect("/autoProfile");
-                    setAutoProfileOpen(false);
-                  }}>
+                  eventKey="/autoProfile"
+                  onClick={() => handleOptionSelect("/autoProfile")}
+                  className="dropdown-item-custom">
                   Submit Request
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   as={Link}
                   to="/autoviewedit"
-          
-                  onClick={() => {
-                    handleSelect("/autoviewedit");
-                    setAutoProfileOpen(false);
-                  }}>
+                  onClick={() => handleOptionSelect("/autoviewedit")}
+                  className="dropdown-item-custom">
                   View/Edit Request
                 </NavDropdown.Item>
               </NavDropdown>
-              </Nav.Item>
 
-              <Nav.Item>
-              <NavDropdown
-                title="Rule Profile"
-                id="rule-profile-dropdown"
-                show={ruleProfileOpen}
-                onMouseEnter={() => setRuleProfileOpen(true)}
-                onMouseLeave={() => setRuleProfileOpen(false)}
-                >
-                {/* <NavDropdown.Item
-                  as={Link}
-                  to="/rantdt"
-                  
-                  onClick={() => {
-                    handleSelect("/rantdt");
-                    setRuleProfileOpen(false);
+              {/* Rule PRofile */}
+              <Dropdown
+                data-bs-theme="dark"
+                show={selectedOption === "RuleProfile"}
+                onMouseEnter={() => handleOptionSelect("RuleProfile")}
+                onMouseLeave={() => handleOptionSelect(null)}>
+                <Dropdown.Toggle
+                  variant="dark"
+                  style={{
+                    backgroundColor:
+                      selectedOption === "RuleProfile"
+                        ? "white"
+                        : "transparent",
+                    color: selectedOption === "RuleProfile" ? "black" : "white",
                   }}>
-                  DT RAN
-                </NavDropdown.Item> */}
-
-<NavDropdown.Item>
-                  <DropdownButton
-                   
-                   key="end"
-                   id="dropdown-button-drop-end"
-                   drop="end"
-                   variant="secondary"
-                   title="DT RAN">
-                   <Dropdown.Item
-                     eventKey="1"
-                     as={Link}
-                     to="/rantdt"
-                     
-                     onClick={() => {
-                       handleSelect("/rantdt");
-                       setRuleProfileOpen(false);
-                     }}>
-                     Submit Request
-                   </Dropdown.Item>
-                   <Dropdown.Item
-                     eventKey="2"
-                     as={Link}
-                     to="/rantdtviewedit"
-                     
-                     onClick={() => {
-                       handleSelect("/rantdtviewedit");
-                       setRuleProfileOpen(false);
-                     }}>
-                     View/Edit Request
-                   </Dropdown.Item>
-                 </DropdownButton>
-                 </NavDropdown.Item>
-
-                {/* <NavDropdown.Item
-                  as={Link}
-                  to="/corpData"
-                  
-                  onClick={() => {
-                    handleSelect("/corpData");
-                    setRuleProfileOpen(false);
-                  }}>
-                  1CorpData
-                </NavDropdown.Item> */}
-
-<NavDropdown.Item>
-                  <DropdownButton
-                   
-                   key="end"
-                   id="dropdown-button-drop-end"
-                   drop="end"
-                   variant="secondary"
-                   title="1CorpData">
-                   <Dropdown.Item
-                     eventKey="1"
-                     as={Link}
-                     to="/corpData"
-                     
-                     onClick={() => {
-                       handleSelect("/corpData");
-                       setRuleProfileOpen(false);
-                     }}>
-                     Submit Request
-                   </Dropdown.Item>
-                   <Dropdown.Item
-                     eventKey="2"
-                     as={Link}
-                     to="/corpDataviewedit"
-                     
-                     onClick={() => {
-                       handleSelect("/corpDataviewedit");
-                       setRuleProfileOpen(false);
-                     }}>
-                     View/Edit Request
-                   </Dropdown.Item>
-                 </DropdownButton>
-                 </NavDropdown.Item>
-
-                <NavDropdown.Item>
-                  <DropdownButton
-                   
-                    key="end"
-                    id="dropdown-button-drop-end"
+                  <span>Rule Profile</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {/* Rant DT */}
+                  <Dropdown
+                    data-bs-theme="dark"
                     drop="end"
-                    variant="secondary"
-                    title="All Projects">
-                    <Dropdown.Item
-                      eventKey="1"
-                      as={Link}
-                      to="/allProjects"
-                      
-                      onClick={() => {
-                        handleSelect("/allProjects");
-                        setRuleProfileOpen(false);
-                      }}>
-                      Submit Request
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      eventKey="2"
-                      as={Link}
-                      to="/allprojectviewedit"
-                      
-                      onClick={() => {
-                        handleSelect("/allprojectviewedit");
-                        setRuleProfileOpen(false);
-                      }}>
-                      View/Edit Request
-                    </Dropdown.Item>
-                  </DropdownButton>
-                </NavDropdown.Item>
-              </NavDropdown>
-              </Nav.Item>
+                    show={dropdownOpen === "RantDT"}
+                    onMouseEnter={() => handleDropdownToggle("RantDT")}
+                    onMouseLeave={() => handleDropdownToggle(null)}>
+                    <Dropdown.Toggle variant="dark">
+                      <span className="p-4">RANT DT</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        as={Link}
+                        to="/rantdt"
+                        onClick={() => handleOptionSelect("RuleProfile")}
+                        className="dropdown-item-custom">
+                        Submit Request
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        as={Link}
+                        to="/rantdtviewedit"
+                        onClick={() => handleOptionSelect("RuleProfile")}
+                        className="dropdown-item-custom">
+                        View/Edit Request
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
 
-              <NavDropdown
-                title="ML Profile"
-                id="ml-profile-dropdown"
-                show={mlProfileOpen}
-                onMouseEnter={() => setmlProfileOpen(true)}
-                onMouseLeave={() => setmlProfileOpen(false)}
-                >
-                <NavDropdown.Item
-                  as={Link}
-                  to="/mlProfile"
-                  
-                  onClick={() => {
-                    handleSelect("/mlProfile");
-                    setmlProfileOpen(false);
+                  {/* corpData */}
+                  <Dropdown
+                    data-bs-theme="dark"
+                    drop="end"
+                    show={dropdownOpen === "corpData"}
+                    onMouseEnter={() => handleDropdownToggle("corpData")}
+                    onMouseLeave={() => handleDropdownToggle(null)}>
+                    <Dropdown.Toggle variant="dark">
+                      <span className="p-4">corpData</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        as={Link}
+                        to="/corpData"
+                        onClick={() => handleOptionSelect("RuleProfile")}
+                        className="dropdown-item-custom">
+                        Submit Request
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        as={Link}
+                        to="/corpDataviewedit"
+                        onClick={() => handleOptionSelect("RuleProfile")}
+                        className="dropdown-item-custom">
+                        View/Edit Request
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+
+                  {/* All Projects */}
+                  <Dropdown
+                    data-bs-theme="dark"
+                    drop="end"
+                    show={dropdownOpen === "AllProjects"}
+                    onMouseEnter={() => handleDropdownToggle("AllProjects")}
+                    onMouseLeave={() => handleDropdownToggle(null)}>
+                    <Dropdown.Toggle variant="dark">
+                      <span className="p-3">All Projects</span>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        as={Link}
+                        to="/allProjects"
+                        onClick={() => handleOptionSelect("RuleProfile")}
+                        className="dropdown-item-custom">
+                        Submit Request
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        as={Link}
+                        to="/allprojectviewedit"
+                        onClick={() => handleOptionSelect("RuleProfile")}
+                        className="dropdown-item-custom">
+                        View/Edit Request
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Dropdown.Menu>
+              </Dropdown>
+
+              {/* ML Profile */}
+              <Dropdown
+                data-bs-theme="dark"
+                className="border-none"
+                show={selectedOption === "MLProfile"}
+                onMouseEnter={() => handleOptionSelect("MLProfile")}
+                onMouseLeave={() => handleOptionSelect(null)}>
+                <Dropdown.Toggle
+                  variant="dark"
+                  style={{
+                    backgroundColor:
+                      selectedOption === "MLProfile" ? "white" : "transparent",
+                    color: selectedOption === "MLProfile" ? "black" : "white",
                   }}>
-                  Submit Request
-                </NavDropdown.Item>
-                <NavDropdown.Item
-                  as={Link}
-                  to="/viewedit"
-                
-                  onClick={() => {
-                    handleSelect("/viewedit");
-                    setmlProfileOpen(false);
-                  }}>
-                  Download Report
-                </NavDropdown.Item>
-              </NavDropdown>
+                  <span>ML Profile</span>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    as={Link}
+                    to="/mlProfile"
+                    onClick={() => handleOptionSelect("MLProfile")}
+                    className="dropdown-item-custom">
+                    Submit Request
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    as={Link}
+                    to="/mlDownloadReport"
+                    onClick={() => handleOptionSelect("MLProfile")}
+                    className="dropdown-item-custom">
+                    View/Edit Request
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+              {/* </Stack> */}
             </Nav>
-          </Container>
-        </Navbar>
-      </header>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
     </>
   );
 };

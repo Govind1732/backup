@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 
 const AutoProfile = () => {
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const fileInput = e.target.elements.formFile;

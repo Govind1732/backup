@@ -11,7 +11,7 @@ const Home = () => {
     <>
       <Container fluid className="d-flex justify-content-center align-items-center ">
         <div className="text-center bg-light border my-2 ">
-          <h1 className='fw-bolder text-break lh-lg'>Data Quality as a Service(DQaaS) enables quicker and accurate data profiling which helps the business team to perform analysis to understand the data better,detect and fix the data quality issues through the DQ score.</h1>
+          <h4 className='fw-bolder text-break lh-lg'>Data Quality as a Service(DQaaS) enables quicker and accurate data profiling which helps the business team to perform analysis to understand the data better,detect and fix the data quality issues through the DQ score.</h4>
         </div>
       </Container>
     </>

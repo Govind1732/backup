@@ -18,13 +18,13 @@ const MLProfile = () => {
   };
 
   return (
-    <Container fluid>
+    <Container fluid className=''>
       <Row className="justify-content-center align-items-center my-xl-1">
-        <Col xl={5}>
-          <div className="px-5 py-2 rounded shadow-lg my-2">
-            <h2 className="mb-2 text-center">ML Profile Form</h2>
+        <Col xl={4}>
+          <div className="px-5 py-1 rounded shadow-lg">
+            <h2 className="text-center">ML Profile Form</h2>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-2" controlId="ControlInput1">
+              <Form.Group className="" controlId="ControlInput1">
                 <Form.Label>Data Source</Form.Label>
                 <Form.Select onChange={handleDataSourceChange}>
                   <option>Select Environment</option>
@@ -33,20 +33,20 @@ const MLProfile = () => {
                 </Form.Select>
               </Form.Group>
               {showProject && (
-                <Form.Group className="mb-2" controlId="ControlInput2">
+                <Form.Group className="" controlId="ControlInput2">
                   <Form.Label>Select Project</Form.Label>
                   <Form.Control type="text" placeholder="Project" className="custom-file-input" />
                 </Form.Group>
               )}
-              <Form.Group className="mb-2" controlId="ControlInput3">
+              <Form.Group className="" controlId="ControlInput3">
                 <Form.Label>Select Database</Form.Label>
                 <Form.Control type="text" placeholder="Database" />
               </Form.Group>
-              <Form.Group className="mb-2" controlId="ControlInput4">
+              <Form.Group className="" controlId="ControlInput4">
                 <Form.Label>Select Tables</Form.Label>
                 <Form.Control type="text" placeholder="Table" className="file-input" />
               </Form.Group>
-              <div className="d-flex justify-content-center mb-2">
+              <div className="d-flex justify-content-center my-2">
                 <Button variant="danger" type="submit">
                   Submit
                 </Button>
